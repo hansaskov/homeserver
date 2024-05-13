@@ -1,0 +1,39 @@
+version: '3'
+services:
+  homeassistant:
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    container_name: homeassistant
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - ./homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    depends_on: 
+      - mosquitto
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - "./mosquitto/config:/mosquitto/config"
+      - "./mosquitto/data:/mosquitto/data"
+      - "./mosquitto/log:/mosquitto/log"
+
+  caddy: 
+    image: caddy:2.7-alpine
+
+    restart: unless-stopped
+    ports: 
+      - "80:80"
+      - "443:433"
+      - "443:433/udp"
+      - "2080:2080"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+
+
