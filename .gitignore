@@ -1,0 +1,6 @@
+homeassistant/config/.*
+mosquitto/log
+mosquitto/config/passwd
+homeassistant/config/home-assistant_v2.db*
+homeassistant/config/home-assistant.log*
+mosquitto/data/mosquitto.db
