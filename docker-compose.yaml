@@ -3,6 +3,7 @@ services:
   homeassistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
     container_name: homeassistant
+
     restart: unless-stopped
     privileged: true
     network_mode: host
@@ -16,6 +17,7 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
+
     restart: unless-stopped
     ports:
       - "1883:1883"
@@ -26,13 +28,13 @@ services:
 
   caddy: 
     image: caddy:2.7-alpine
+    container_name: caddy
 
     restart: unless-stopped
     ports: 
       - "80:80"
       - "443:433"
       - "443:433/udp"
-      - "2080:2080"
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
 
