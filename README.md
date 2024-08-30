@@ -1,36 +1,46 @@
-# Homeserver for Askov. 
-You can find the full repository for this project under https://github.com/hansaskov/homeserver. 
+# Homeserver for Askov
 
-Here you can copy the files to you computer using git clone
-``` bash
+This project sets up a comprehensive home server solution, integrating various services for smart home management, automation, and secure remote access. The full repository for this project can be found at [https://github.com/hansaskov/homeserver](https://github.com/hansaskov/homeserver).
+
+## Quick Start
+
+### Download project using git clone
+
+```bash
 git clone https://github.com/hansaskov/homeserver.git
+cd homeserver
 ```
 
-## Quickstart
-How to start services. 
+### Start Services
 
-``` bash
+```bash
 docker compose up -d
-
 ```
 
-How to see the running containers: 
-``` bash
-docker container list
-```
+### Stop Services
 
-How to stop services
-``` bash
+```bash
 docker compose down
 ```
 
-## Description
+## Components
 
-This project is structured into three components. Those being homeassistant, mosquitto and cloudflare tunnels.
+### Home Assistant
 
-1. Homeassistant
-This is the main purpose of this application. It will allow you to add smart home devices into a singular place. You can see and edit the configuration files of homeassistant under the /hommasistant/config folder. Which you will be told to do by some tutorials. 
-2. Mosquitto
-This service will start a mqtt server on port 1883. This allows mqtt client to speak to a centraliced broker for cross platform decoupled communication. 
-3. Cloudflare tunnels or cloudflared is a service which allows you to access these services securely from a registered domain. For testing purposes you can visit home.hjemmet.net to visit the homeassistant web page. Cloudflare tunnelts documentation: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/
+[Home Assistant](https://www.home-assistant.io/) is the core of this application, providing a centralized platform for managing smart home devices. Configuration files can be found and edited in the `/homeassistant/config` folder.
 
+### Mosquitto
+
+Mosquitto serves as an MQTT broker, running on port 1883. It facilitates communication between MQTT clients, enabling cross-platform, decoupled messaging for various smart home devices and services.
+
+### Cloudflare Tunnels
+
+Cloudflare Tunnels (cloudflared) provides secure remote access to your services through a registered domain. For testing, you can access the Home Assistant web interface at [home.hjemmet.net](https://home.hjemmet.net) or [localhost:8123](https://localhost:8123)
+
+For more information, refer to the [Cloudflare Tunnels documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
+
+### Node-RED
+
+[Node-RED](https://nodered.org/) is a powerful flow-based development tool for visual programming. It allows you to wire together hardware devices, APIs, and online services in a visual flow-based programming interface. In this setup, Node-RED can be used to create complex automations such as with Home Assistant and MQTT.
+
+Node-RED runs on port 1880 and can be accessed here [localhost:1880](https://localhost:1880)
