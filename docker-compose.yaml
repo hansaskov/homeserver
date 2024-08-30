@@ -20,14 +20,6 @@ services:
       - /run/dbus:/run/dbus:ro
     depends_on: 
       - mosquitto
-  
-  cloudflared:
-      image: cloudflare/cloudflared
-      network_mode: host
-      restart: unless-stopped
-      command: tunnel run
-      environment:
-        - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
   nodered:
     image: nodered/node-red
@@ -38,3 +30,12 @@ services:
       - "./nodered/data:/data"
     depends_on:
       - mosquitto
+
+  cloudflared:
+      image: cloudflare/cloudflared
+      network_mode: host
+      restart: unless-stopped
+      command: tunnel run
+      environment:
+        - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+
