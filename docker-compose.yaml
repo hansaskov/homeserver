@@ -1,7 +1,6 @@
 services:
   homeassistant:
     image: homeassistant/home-assistant:stable
-    container_name: homeassistant
     restart: unless-stopped
     privileged: true
     network_mode: host
@@ -14,7 +13,6 @@ services:
 
   mosquitto:
     image: eclipse-mosquitto
-    container_name: mosquitto
     restart: unless-stopped
     ports:
       - "1883:1883"
@@ -25,9 +23,18 @@ services:
   
   cloudflared:
       image: cloudflare/cloudflared
-      container_name: cloudflared
       network_mode: host
       restart: unless-stopped
       command: tunnel run
       environment:
         - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+
+  nodered:
+    image: nodered/node-red
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - "./nodered/data:/data"
+    depends_on:
+      - mosquitto

@@ -6,4 +6,6 @@ mosquitto/log
 mosquitto/config/passwd
 mosquitto/data/mosquitto.db
 
+nodered/data/node_modules
+
 .env
