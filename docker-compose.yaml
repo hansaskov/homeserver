@@ -1,4 +1,14 @@
 services:
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - "./mosquitto/config:/mosquitto/config"
+      - "./mosquitto/data:/mosquitto/data"
+      - "./mosquitto/log:/mosquitto/log"
+  
   homeassistant:
     image: homeassistant/home-assistant:stable
     restart: unless-stopped
@@ -10,16 +20,6 @@ services:
       - /run/dbus:/run/dbus:ro
     depends_on: 
       - mosquitto
-
-  mosquitto:
-    image: eclipse-mosquitto
-    restart: unless-stopped
-    ports:
-      - "1883:1883"
-    volumes:
-      - "./mosquitto/config:/mosquitto/config"
-      - "./mosquitto/data:/mosquitto/data"
-      - "./mosquitto/log:/mosquitto/log"
   
   cloudflared:
       image: cloudflare/cloudflared
