@@ -5,3 +5,5 @@ homeassistant/config/home-assistant.log*
 mosquitto/log
 mosquitto/config/passwd
 mosquitto/data/mosquitto.db
+
+.env
