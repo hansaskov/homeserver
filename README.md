@@ -31,7 +31,6 @@ This project is structured into three components. Those being homeassistant, mos
 1. Homeassistant
 This is the main purpose of this application. It will allow you to add smart home devices into a singular place. You can see and edit the configuration files of homeassistant under the /hommasistant/config folder. Which you will be told to do by some tutorials. 
 2. Mosquitto
-This service will start a mqtt server on port 1883. There 
+This service will start a mqtt server on port 1883. This allows mqtt client to speak to a centraliced broker for cross platform decoupled communication. 
+3. Cloudflare tunnels or cloudflared is a service which allows you to access these services securely from a registered domain. For testing purposes you can visit home.hjemmet.net to visit the homeassistant web page. Cloudflare tunnelts documentation: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/
 
-Cloudflare tunnelts documentation: 
-https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/
