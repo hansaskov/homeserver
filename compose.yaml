@@ -33,9 +33,11 @@ services:
 
   cloudflared:
       image: cloudflare/cloudflared
-      network_mode: host
       restart: unless-stopped
       command: tunnel run
+      network_mode: host
       environment:
         - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+      depends_on:
+        - homeassistant 
 
