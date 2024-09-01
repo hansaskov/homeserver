@@ -15,7 +15,7 @@ This project sets up a comprehensive home server solution, integrating various s
 
 ## How do I access the server?
 
-You can access the files on the homeserver using a terminal/commandprompt or Visual Studio Code (with the "Remote - SSH" extension). A prerequisite for the next step is ensuring that you are on the same internet network as the homeserver. You can use the `ping` command to check the connectivity between devices. To get started, open a console/terminal and run the following:
+You can access the files on the homeserver using a terminal/commandprompt or Visual Studio Code (with the "Remote - SSH" extension). A prerequisite for the next step is ensuring that you are on the same internet network as the homeserver. You can use the `ping` command to check the connectivity between devices on the same network. To get started, open a console/terminal and run the following:
 
 ```bash
 ping 192.168.1.35
@@ -54,7 +54,7 @@ The expected output will be something like this:
 
 And it is the terminal of the homeserver! Congratulations, you now have access!
 
-However, this method is not very user-friendly. So instead, let's use Visual Studio Code and Remote SSH to get a graphical user interface. Find and open Visual Studio Code on your computer. Once open, click the `><` symbol at the bottom left of the window, select "Connect to Host," and then choose `192.168.1.35`. This will open a window and ask for a password. You will enter the same password as when using SSH, which is also the same as your Home Assistant login. Visual Studio Code will now display a mostly empty window. That's because you have to tell VS Code which folder to look into. You can find the project under `~/Desktop/homeserver`. Navigate to it using the input field and open it up.
+However, this method is not very user-friendly. So instead, let's use Visual Studio Code and Remote SSH to get a graphical user interface. Find and open Visual Studio Code on your computer. Once open, click the `><` symbol at the bottom left of the window, select "Connect to Host," and then choose `192.168.1.35`. This will open a window and ask for a password. You will enter the same password as when using SSH, which is also the same as your Home Assistant login. Visual Studio Code will now display a mostly empty window. That's because you have to tell VS Code which folder to look into. You can find the project under `/home/homeserver/Desktop/homeserver`. Navigate to it using the input field and open it up.
 
 For a more detailed guide, visit the official documentation: [Visual Studio Code - Remote SSH](https://code.visualstudio.com/docs/remote/ssh#_connect-to-a-remote-host).
 
