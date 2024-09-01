@@ -97,13 +97,13 @@ If a service isn't working, the first step is to check if its Docker container i
 
 ## Common Commands
 
-Start Docker services:
+Start Docker containers:
 
 ```bash
 docker compose up -d
 ```
 
-Stop Docker services:
+Stop Docker containers:
 
 ```bash
 docker compose down
@@ -125,10 +125,4 @@ Restart a specific service:
 
 ```bash
 docker compose restart <service_name>
-```
-
-Remove all stopped containers:
-
-```bash
-docker system prune -f
 ```
