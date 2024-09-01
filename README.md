@@ -9,14 +9,13 @@ This project sets up a comprehensive home server solution, integrating various s
 
 ## Prerequisites
 
-1. **[Git](https://git-scm.com/downloads)**
-2. **[Visual Studio Code](https://code.visualstudio.com/Download)**
-3. **[Remote - SSH Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)**
-4. **[Nix IDE Extension (Optional)](https://marketplace.visualstudio.com/items?itemName=jnoortheen.nix-ide)**
+1. **[Visual Studio Code](https://code.visualstudio.com/Download)**
+2. **[Remote - SSH Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)**
+3. **[Nix IDE Extension (Optional)](https://marketplace.visualstudio.com/items?itemName=jnoortheen.nix-ide)**
 
 ## How do I access the server?
 
-You can access the files on the homeserver using a terminal or Visual Studio Code (with the "Remote - SSH" extension). A prerequisite for the next step is ensuring that you are on the same internet network as the homeserver. You can use the `ping` command to check the connectivity between devices. To get started, open a console/terminal and run the following:
+You can access the files on the homeserver using a terminal/commandprompt or Visual Studio Code (with the "Remote - SSH" extension). A prerequisite for the next step is ensuring that you are on the same internet network as the homeserver. You can use the `ping` command to check the connectivity between devices. To get started, open a console/terminal and run the following:
 
 ```bash
 ping 192.168.1.35
@@ -59,7 +58,7 @@ However, this method is not very user-friendly. So instead, let's use Visual Stu
 
 For a more detailed guide, visit the official documentation: [Visual Studio Code - Remote SSH](https://code.visualstudio.com/docs/remote/ssh#_connect-to-a-remote-host).
 
-## Introduction
+## Description
 
 The following will be an explanation of the different services run on the home server, but before that, let's give a small introduction to how these services are run. All services are run in Docker containers. A Docker container is essentially an isolated virtual machine where some program is allowed to live and do its thing. This program will usually have a port like `1880` available for other services or users to interact with it. This port is, however, not accessible on the host system (the PC) because all Docker images are run with an isolated Docker network. You can see a Docker network like a normal LAN network, where many Docker containers in a Docker network are equivalent to many gaming PCs hooked together in a LAN setup.
 
