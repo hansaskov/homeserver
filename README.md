@@ -44,7 +44,7 @@ You should expect an output requesting a password like this:
 (homeserver@192.168.1.35) Password: 
 ```
 
-You will need to use the password for the homeserver, which is the same as your login password for Home Assistant.
+You will need to use the password for the homeserver, which is the same as your login password for Home Assistant. For Hans it reminds him of onions and it is something you love minus something else
 
 The expected output will be something like this:
 
