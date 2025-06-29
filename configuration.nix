@@ -7,7 +7,7 @@
     ];
 
   # System Configuration
-  system.stateVersion = "23.11";
+  system.stateVersion = "25.05";
   nixpkgs.config.allowUnfree = true;
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
@@ -29,7 +29,6 @@
       allowedTCPPorts = [ 22 1883 8123 1880 ];
     };
     nameservers = ["1.1.1.1" "8.8.8.8"];
-    defaultGateway = "192.168.1.1";
     interfaces.eth0 = {
       useDHCP = false;
       ipv4.addresses = [{
