@@ -29,6 +29,7 @@
       allowedTCPPorts = [ 22 1883 8123 1880 ];
     };
     nameservers = ["1.1.1.1" "8.8.8.8"];
+    defaultGateway = "192.168.1.1";    
     interfaces.eth0 = {
       useDHCP = false;
       ipv4.addresses = [{
