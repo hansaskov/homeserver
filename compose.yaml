@@ -8,7 +8,7 @@ services:
       - "./mosquitto/config:/mosquitto/config"
       - "./mosquitto/data:/mosquitto/data"
       - "./mosquitto/log:/mosquitto/log"
-  
+
   homeassistant:
     image: homeassistant/home-assistant:2025.12
     restart: unless-stopped
@@ -18,26 +18,30 @@ services:
       - ./homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    depends_on: 
-      - mosquitto
-
-  nodered:
-    image: nodered/node-red
-    restart: unless-stopped
-    ports:
-      - "1880:1880"
-    volumes:
-      - "./nodered/data:/data"
     depends_on:
       - mosquitto
 
   cloudflared:
-      image: cloudflare/cloudflared
+      image: cloudflare/cloudflared:latest
       restart: unless-stopped
       command: tunnel run
       network_mode: host
       environment:
         - TUNNEL_TOKEN=${TUNNEL_TOKEN}
       depends_on:
-        - homeassistant 
+        - homeassistant
 
+  sonoff-dongle-flasher:
+      image: ewelink/sonoff-dongle-flasher:latest
+      container_name: sonoff-dongle-flasher
+      ports:
+        - "8324:8324"
+      privileged: true
+      volumes:
+        - sonoff_data:/workspace/data  # Persistent config/firmware
+        - /run/udev:/run/udev:ro       # Auto-discovery
+      restart: unless-stopped
+
+
+volumes:
+    sonoff_data:

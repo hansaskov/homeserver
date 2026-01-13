@@ -26,7 +26,7 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 1883 8123 1880 ];
+      allowedTCPPorts = [ 22 1883 8123 1880 8324 ];
     };
     nameservers = ["1.1.1.1" "8.8.8.8"];
     defaultGateway = "192.168.1.1";    
