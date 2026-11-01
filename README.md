@@ -6,6 +6,7 @@ This project sets up a comprehensive home server solution, integrating various s
 
 - **[Home Assistant](http://192.168.1.35:8123)**: Manage and control smart home devices.
 - **[Node-RED](http://192.168.1.35:1880)**: Visual tool for wiring together devices, APIs, and online services.
+- **[OpenCode](http://192.168.1.35:4096)**: Use the OpenCode coding agent from a browser on the home network.
 
 ## Prerequisites
 
@@ -84,6 +85,36 @@ In this example, we're setting up a Node-RED service. The 'image' part tells Doc
 The 'volumes' part is a bit like connecting an external hard drive to your container. It lets the container access a folder on your actual computer. Here, we're connecting a local folder `./nodered/data` to the `/data` folder inside the container. This way, even if you stop or delete the container, your Node-RED settings will still be there when you start it up again.
 
 This is just the simplest example; you can find three more services in the compose.yaml, which I encourage you to look at as it is the backbone of the homeserver.
+
+## OpenCode in the Browser
+
+OpenCode also runs as a small web server, so the agent can be used from any
+browser on the same home network:
+
+- Address: <http://192.168.1.35:4096>
+- Password: stored on the server in `/var/lib/opencode-web/password`
+
+Open the address and enter `http://192.168.1.35:4096` together with the password
+when the connection screen appears. The password is generated once on first
+start and stays the same until the file is deleted and the service restarted.
+For scripts, the same password works with HTTP Basic auth and the username
+`opencode`:
+
+```bash
+curl -u opencode:$(cat /var/lib/opencode-web/password) http://192.168.1.35:4096/api/info
+```
+
+Manage the service with:
+
+```bash
+sudo systemctl status opencode-web
+sudo systemctl restart opencode-web
+journalctl -u opencode-web -f
+```
+
+The port is opened in the NixOS firewall but is not published through
+Cloudflare, so it is only reachable from the home network. Anyone with the
+password gets full agent access to the server, so keep it inside the house.
 
 ## FAQ
 
