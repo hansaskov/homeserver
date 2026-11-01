@@ -10,7 +10,7 @@ services:
       - "./mosquitto/log:/mosquitto/log"
 
   homeassistant:
-    image: homeassistant/home-assistant:2026.3
+    image: homeassistant/home-assistant:2026.10.4
     restart: unless-stopped
     privileged: true
     network_mode: host
