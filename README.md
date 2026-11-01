@@ -1,159 +1,72 @@
 # Homeserver for Askov
 
-This project sets up a comprehensive home server solution, integrating various services for smart home management, automation, and secure remote access. The home server is located at my father's place with the IP address `192.168.1.35`. The full repository for this project can be found at [GitHub: hansaskov/homeserver](https://github.com/hansaskov/homeserver).
+This is the home server. It runs the smart home, and it runs an AI helper
+called an **agent** that can make changes to the server for you.
 
-### Services
+The server is a small computer at Hans's father's home. On the home network,
+its address is `192.168.1.35`.
 
-- **[Home Assistant](http://192.168.1.35:8123)**: Manage and control smart home devices.
-- **[Node-RED](http://192.168.1.35:1880)**: Visual tool for wiring together devices, APIs, and online services.
-- **[OpenCode](http://192.168.1.35:4096)**: Use the OpenCode coding agent from a browser on the home network.
+## Start here: ask the agent
 
-## Prerequisites
+You do not need to know anything about coding, terminals, or servers.
 
-1. **[Visual Studio Code](https://code.visualstudio.com/Download)**
-2. **[Remote - SSH Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)**
-3. **[Nix IDE Extension (Optional)](https://marketplace.visualstudio.com/items?itemName=jnoortheen.nix-ide)**
+1. Make sure your computer, tablet, or phone is connected to the same Wi-Fi
+   network as the server.
+2. Open a web browser (for example Chrome, Safari, Edge, or Firefox).
+3. Type this address into the address bar and press Enter:
 
-## How do I access the server?
+   <http://192.168.1.35:4096>
 
-You can access the files on the homeserver using a terminal/commandprompt or Visual Studio Code (with the "Remote - SSH" extension). A prerequisite for the next step is ensuring that you are on the same internet network as the homeserver. You can use the `ping` command to check the connectivity between devices on the same network. To get started, open a console/terminal and run the following:
+4. A login screen appears. Enter the password.
+   - The password is kept in a file on the server:
+     `/var/lib/opencode-web/password`.
+   - If you do not know the password, ask Hans. He can look it up for you.
+5. You will see a chat window. Type what you want in normal language.
+   For example:
+   - "Is Home Assistant working?"
+   - "Restart Home Assistant."
+   - "The living room light is not responding. Please check why."
+6. The agent will do the work and explain what it did. If it needs a decision
+   from you, it will ask.
 
-```bash
-ping 192.168.1.35
-```
+The agent can read and change files, restart services, and check what is
+wrong. Only give it instructions you are comfortable with.
 
-You should hopefully see some acknowledgments like this:
+> **Keep the password private.** Anyone who has it can control the server.
+> The agent page only works on the home network, not from the internet.
 
-```bash
-ping 192.168.1.35
-PING 192.168.1.35 (192.168.1.35) 56(84) bytes of data.
-64 bytes from 192.168.1.35: icmp_seq=1 ttl=64 time=3.14 ms
-64 bytes from 192.168.1.35: icmp_seq=2 ttl=64 time=2.51 ms
-64 bytes from 192.168.1.35: icmp_seq=3 ttl=64 time=3.26 ms
-64 bytes from 192.168.1.35: icmp_seq=4 ttl=64 time=2.84 ms
-```
+## What the server runs
 
-If the previous connection succeeded, then we can proceed to the next step of using SSH:
+| Service | Open it at | What it is |
+| --- | --- | --- |
+| **OpenCode** | <http://192.168.1.35:4096> | The AI agent. This is the main way to get things done. |
+| **Home Assistant** | <http://192.168.1.35:8123> | The smart home dashboard. Use it to turn devices on and off and see their status. |
 
-```bash
-ssh homeserver@192.168.1.35
-```
+Home Assistant can also be reached from outside the home through a secure
+Cloudflare connection. Ask Hans for the address.
 
-You should expect an output requesting a password like this:
+## If something is not working
 
-```bash
-(homeserver@192.168.1.35) Password: 
-```
+1. Open the agent page (<http://192.168.1.35:4096>) and describe the problem.
+   For example: "Home Assistant is not loading. Please fix it."
+2. If the agent page does not open, the server may be turned off or
+   disconnected from the network. Check that the server is on and connected
+   to the router.
+3. If it still does not work, contact Hans.
 
-You will need to use the password for the homeserver, which is the same as your login password for Home Assistant. For Hans it reminds him of onions and it is something you love minus something else
+## Technical details (you can skip this)
 
-The expected output will be something like this:
+The agent handles day-to-day maintenance. These are the files it works with:
 
-```bash
-[homeserver@nixos:~/Desktop/homeserver]$ 
-```
+- `compose.yaml` — the Docker services: Home Assistant, Mosquitto, and the
+  Cloudflare Tunnel.
+- `configuration.nix` — the NixOS system settings, including the OpenCode
+  service and the firewall.
+- `.env` — the Cloudflare Tunnel token.
 
-And it is the terminal of the homeserver! Congratulations, you now have access!
-
-However, this method is not very user-friendly. So instead, let's use Visual Studio Code and Remote SSH to get a graphical user interface. Find and open Visual Studio Code on your computer. Once open, click the `><` symbol at the bottom left of the window, select "Connect to Host," and then choose `192.168.1.35`. This will open a window and ask for a password. You will enter the same password as when using SSH, which is also the same as your Home Assistant login. Visual Studio Code will now display a mostly empty window. That's because you have to tell VS Code which folder to look into. You can find the project under `/home/homeserver/Desktop/homeserver`. Navigate to it using the input field and open it up.
-
-For a more detailed guide, visit the official documentation: [Visual Studio Code - Remote SSH](https://code.visualstudio.com/docs/remote/ssh#_connect-to-a-remote-host).
-
-## Description
-
-The following will be an explanation of the different services run on the home server, but before that, let's give a small introduction to how these services are run. All services are run in Docker containers. A Docker container is essentially an isolated virtual machine where some program is allowed to live and do its thing. This program will usually have a port like `1880` available for other services or users to interact with it. This port is, however, not accessible on the host system (the PC) because all Docker images are run within an isolated Docker network. You can see a Docker network like a normal LAN network, where many Docker containers in a Docker network are equivalent to many gaming PCs hooked together in a LAN setup.
-
-So, since the Docker network is not accessible by default, we will have to specify which ports we want to expose to our host PC. This will usually be done with a string in the following format `"1880:1880"`, which says "Point port 1880 inside of the container to port 1880 on the host system." You, the user, will then be able to access the program running inside the container by visiting the site at `http://192.168.1.35:1880`. Where `192.168.1.35` describes the static IP set for the home server and `1880` describes the port Node-RED exposes to the host system.
-
-To manage all of these Docker containers, we will use a Docker Compose file to describe how to run the Docker containers. I won't go into all the details as it is quite extensive, so let's instead look at an example of the Node-RED service. Below we have a valid [Docker Compose file](compose.yaml) for creating a Node-RED service.
-
-```yaml
-services:
-  nodered:
-    image: nodered/node-red
-    restart: unless-stopped
-    ports:
-      - "1880:1880"
-    volumes:
-      - "./nodered/data:/data"
-    depends_on:
-      - mosquitto
-```
-
-In this example, we're setting up a Node-RED service. The 'image' part tells Docker which container image to use, in this case, the official Node-RED image. 'restart: unless-stopped' means the container will always restart unless you manually stop it. The 'ports' section is where we specify which ports to expose, just like we talked about earlier. Here, we're exposing port 1880, which is the default port for Node-RED's web interface.
-
-The 'volumes' part is a bit like connecting an external hard drive to your container. It lets the container access a folder on your actual computer. Here, we're connecting a local folder `./nodered/data` to the `/data` folder inside the container. This way, even if you stop or delete the container, your Node-RED settings will still be there when you start it up again.
-
-This is just the simplest example; you can find three more services in the compose.yaml, which I encourage you to look at as it is the backbone of the homeserver.
-
-## OpenCode in the Browser
-
-OpenCode also runs as a small web server, so the agent can be used from any
-browser on the same home network:
-
-- Address: <http://192.168.1.35:4096>
-- Password: stored on the server in `/var/lib/opencode-web/password`
-
-Open the address and enter `http://192.168.1.35:4096` together with the password
-when the connection screen appears. The password is generated once on first
-start and stays the same until the file is deleted and the service restarted.
-For scripts, the same password works with HTTP Basic auth and the username
-`opencode`:
+OpenCode runs as the system service `opencode-web` on port `4096`. If the
+agent page itself will not start, a technical person can restart it with:
 
 ```bash
-curl -u opencode:$(cat /var/lib/opencode-web/password) http://192.168.1.35:4096/api/info
-```
-
-Manage the service with:
-
-```bash
-sudo systemctl status opencode-web
 sudo systemctl restart opencode-web
-journalctl -u opencode-web -f
-```
-
-The port is opened in the NixOS firewall but is not published through
-Cloudflare, so it is only reachable from the home network. Anyone with the
-password gets full agent access to the server, so keep it inside the house.
-
-## FAQ
-
-### Why do we use Cloudflare Tunnels?
-
-Cloudflare Tunnels, managed by the `cloudflared` service, allow secure access to our homeserver’s internal services from anywhere without exposing our network to the internet. Instead of dealing with port forwarding, `cloudflared` creates a secure, outbound-only connection from our homeserver to Cloudflare's network. This way, external requests are routed through Cloudflare's secure tunnel, ensuring that our local services are protected while still accessible remotely. This method enhances security and simplifies remote access, making our homeserver setup both safe and easy to manage.
-
-### What should I do if a service isn't working?
-
-If a service isn't working, the first step is to check if its Docker container is running. You can do this by using the `docker ps` command to list all active containers. If the container is not listed, try restarting the service using `docker compose restart <service_name>`. If the issue persists, checking the logs with `docker logs <container_name>` can provide more details on what's going wrong.
-
-## Common Commands
-
-Start Docker containers:
-
-```bash
-docker compose up -d
-```
-
-Stop Docker containers:
-
-```bash
-docker compose down
-```
-
-View running containers:
-
-```bash
-docker ps
-```
-
-Check container logs:
-
-```bash
-docker logs <container_name>
-```
-
-Restart a specific service:
-
-```bash
-docker compose restart <service_name>
 ```
