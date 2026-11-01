@@ -125,7 +125,7 @@ in
         "XDG_RUNTIME_DIR=/run/opencode-web"
       ];
       ExecStart = opencode-web-start;
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 5;
     };
   };

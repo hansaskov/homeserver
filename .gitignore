@@ -1,7 +1,6 @@
 homeassistant/config/.*
 homeassistant/config/home-assistant_v2.db*
 homeassistant/config/home-assistant.log*
-homeassistant/config/backups/
 
 mosquitto/log
 mosquitto/config/passwd
