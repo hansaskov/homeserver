@@ -3,7 +3,7 @@
 This is the home server. It runs the smart home, and it runs an AI helper
 called an **agent** that can make changes to the server for you.
 
-The server is a small computer at Hans's father's home. On the home network,
+The server is a small computer at Jan's home. On the home network,
 its address is `192.168.1.35`.
 
 ## Start here: ask the agent
@@ -17,10 +17,9 @@ You do not need to know anything about coding, terminals, or servers.
 
    <http://192.168.1.35:4096>
 
-4. A login screen appears. Enter the password.
-   - The password is kept in a file on the server:
-     `/var/lib/opencode-web/password`.
-   - If you do not know the password, ask Hans. He can look it up for you.
+4. A login screen appears.
+   - Username: `opencode`
+   - Password: ask Hans for the password.
 5. You will see a chat window. Type what you want in normal language.
    For example:
    - "Is Home Assistant working?"
